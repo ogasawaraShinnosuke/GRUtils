@@ -1,5 +1,6 @@
 package com.ogasawaraShinnosuke.grutils.utils
 
+import groovy.time.TimeCategory
 import org.joda.time.DateTime
 import org.joda.time.Period
 import org.joda.time.PeriodType

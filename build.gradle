@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -16,4 +17,36 @@ dependencies {
     compile 'joda-time:joda-time:2.9.3'
     compile 'org.codehaus.groovy:groovy-all:2.4.6'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+def repo = new File(rootDir, "repository")
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = '0.0.1'
+            pom.groupId = 'com.ogasawaraShinnosuke.grutils'
+            pom.artifactId = 'grutils'
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
