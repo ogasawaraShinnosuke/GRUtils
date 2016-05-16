@@ -26,7 +26,7 @@ uploadArchives {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
             pom.version = '0.0.1'
-            pom.groupId = 'com.ogasawaraShinnosuke.grutils'
+            pom.groupId = 'com.ogasawaraShinnosuke'
             pom.artifactId = 'grutils'
         }
     }
