@@ -1,6 +1,8 @@
 package com.ogasawaraShinnosuke.grutils.utils
 
+import constants.DateFormat
 import org.joda.time.DateTime
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -48,5 +50,25 @@ class DateTimeUtilsTest extends Specification {
         new DateTime('2015-05-05') | null                       || 0
         null                       | new DateTime('2015-05-05') || 0
         null                       | null                       || 0
+    }
+
+    @Ignore
+    def "toSerialMonths"() {
+
+    }
+
+    @Unroll
+    def "plusDate"() {
+        expect:
+        DateFormat.YYYYMMDD.parse(DateTimeUtils.plusDate(date, y, m, d)) == result
+
+        where:
+        date                   | y | m | d | result
+        new Date()             | 0 | 0 | 0 | DateFormat.YYYYMMDD.parse(new Date())
+        new Date('2018/04/01') | 1 | 5 | 8 | DateFormat.YYYYMMDD.parse(new Date('2019/09/09'))
+        new Date('2018/04/01') | 1 | 5 | 0 | DateFormat.YYYYMMDD.parse(new Date('2019/09/01'))
+        new Date('2018/04/01') | 1 | 0 | 0 | DateFormat.YYYYMMDD.parse(new Date('2019/04/01'))
+        new Date('2018/04/01') | 0 | 0 | 0 | DateFormat.YYYYMMDD.parse(new Date('2018/04/01'))
+        null                   | 0 | 0 | 0 | DateFormat.YYYYMMDD.parse(new Date())
     }
 }
